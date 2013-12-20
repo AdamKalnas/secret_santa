@@ -29,4 +29,15 @@ var _ = Describe("SecretSanta", func() {
 
 		Expect(secret_santa.GetMatches(list_of_participants)).To(Equal(matches))
 	})
+
+	It("Should match three participants to recipients other than themselves", func() {
+		list_of_participants := []string{"Renea", "Rachel", "Ryan"}
+		results := secret_santa.GetMatches(list_of_participants)
+		Expect(len(results)).To(Equal(3))
+		for _, participant := range list_of_participants {
+			match, found := results[participant]
+			Expect(match).ToNot(Equal(participant))
+			Expect(found).To(Equal(true))
+		}
+	})
 })
